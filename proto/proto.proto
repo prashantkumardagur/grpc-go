@@ -1,0 +1,33 @@
+syntax = "proto3";
+package proto;
+
+option go_package = "./proto";
+
+//==============================================================================
+
+message Empty {}
+
+message GreetRequest {
+    string name = 1;
+}
+
+message GreetrRequestList {
+    repeated string names = 1;
+}
+
+message GreetResponse {
+    string message = 1;
+}
+
+message GreetResponseList {
+    repeated string messages = 1;
+}
+
+//==============================================================================
+
+service GreetService {
+    rpc UnaryGreet(GreetRequest) returns (GreetResponse) {}
+    rpc ServerStreamingGreet(GreetrRequestList) returns (stream GreetResponse) {}
+    rpc ClientStreamingGreet(stream GreetRequest) returns (GreetResponseList) {}
+    rpc BiDiStreamingGreet(stream GreetRequest) returns (stream GreetResponse) {}
+}
